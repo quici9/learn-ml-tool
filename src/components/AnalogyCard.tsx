@@ -1,4 +1,6 @@
 import type { AnalogyContent } from '../types/lesson';
+import { Brain } from 'lucide-react';
+import { FormattedText } from './FormattedText';
 import styles from './AnalogyCard.module.css';
 
 interface AnalogyCardProps {
@@ -11,7 +13,7 @@ export function AnalogyCard({ content }: AnalogyCardProps) {
       <div className={styles.leftBorder} />
       <div className={styles.content}>
         <div className={styles.icon}>
-          {content.icon || '🧠'}
+          {content.icon || <Brain size={24} />}
         </div>
         <div className={styles.body}>
           <h4 className={styles.title}>
@@ -30,11 +32,11 @@ export function AnalogyCard({ content }: AnalogyCardProps) {
               <div key={idx} className={styles.tableRow}>
                 <div className={styles.abstract}>
                   <span className={styles.bullet}>•</span>
-                  {row.abstract}
+                  <FormattedText text={row.abstract} />
                 </div>
                 <div className={styles.concrete}>
                   <span className={styles.arrow}>→</span>
-                  {row.concrete}
+                  <FormattedText text={row.concrete} />
                 </div>
               </div>
             ))}

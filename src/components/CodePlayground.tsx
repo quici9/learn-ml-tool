@@ -1,9 +1,11 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import Prism from 'prismjs';
+import { Clipboard, Check, Play, Terminal, Settings, ChevronDown, ChevronUp } from 'lucide-react';
 import 'prismjs/components/prism-python';
 import 'prismjs/themes/prism-tomorrow.css';
 import type { CodeContent, PlaygroundParameter } from '../types/lesson';
 import { getOutputForParams } from '../utils/code-outputs';
+import { FormattedText } from './FormattedText';
 import styles from './CodePlayground.module.css';
 
 interface CodePlaygroundProps {
@@ -85,14 +87,14 @@ export function CodePlayground({ content, sectionId }: CodePlaygroundProps) {
             <span className={styles.optionalBadge}>Nâng cao</span>
             <span className={styles.optionalTitle}>Playground (Tùy chọn)</span>
           </div>
-          <button className={styles.optionalBtn}>Xem Code ↓</button>
+          <button className={styles.optionalBtn}>Xem Code <ChevronDown size={14} style={{ marginLeft: 4 }} /></button>
         </div>
       )}
       
       {content.isOptional && isExpanded && (
         <div className={styles.optionalBannerExpanded} onClick={() => setIsExpanded(false)}>
           <span className={styles.optionalTitle}>Playground</span>
-          <button className={styles.optionalBtn}>Đóng Code ↑</button>
+          <button className={styles.optionalBtn}>Đóng Code <ChevronUp size={14} style={{ marginLeft: 4 }} /></button>
         </div>
       )}
 
@@ -105,7 +107,7 @@ export function CodePlayground({ content, sectionId }: CodePlaygroundProps) {
                 <span className={styles.filename}>{content.filename}</span>
               )}
               <span className={styles.langBadge}>{content.language}</span>
-              <span className={styles.playgroundBadge}>▶ Playground</span>
+              <span className={styles.playgroundBadge}><Terminal size={14} style={{ marginRight: 4 }} /> Playground</span>
             </div>
             <div className={styles.headerActions}>
               <button
@@ -113,7 +115,7 @@ export function CodePlayground({ content, sectionId }: CodePlaygroundProps) {
                 className={`${styles.copyBtn} ${copied ? styles.copyBtnSuccess : ''}`}
                 onClick={handleCopy}
               >
-                {copied ? '✓ Copied' : '📋 Copy'}
+                {copied ? <><Check size={14} style={{ marginRight: 4 }} /> Copied</> : <><Clipboard size={14} style={{ marginRight: 4 }} /> Copy</>}
               </button>
               <button
                 type="button"
@@ -127,7 +129,7 @@ export function CodePlayground({ content, sectionId }: CodePlaygroundProps) {
                     Running...
                   </>
                 ) : (
-                  '▶ Run'
+                  <><Play size={14} style={{ marginRight: 4 }} /> Run</>
                 )}
               </button>
             </div>
@@ -135,7 +137,7 @@ export function CodePlayground({ content, sectionId }: CodePlaygroundProps) {
 
           {/* ─── Description ─── */}
           {content.description && (
-            <p className={styles.description}>{content.description}</p>
+            <p className={styles.description}><FormattedText text={content.description} /></p>
           )}
 
           {/* ─── Code ─── */}
@@ -151,7 +153,7 @@ export function CodePlayground({ content, sectionId }: CodePlaygroundProps) {
           {/* ─── Parameter Controls ─── */}
           {hasParams && (
             <div className={styles.paramsPanel}>
-              <span className={styles.paramsPanelTitle}>⚙ Parameters</span>
+              <span className={styles.paramsPanelTitle}><Settings size={14} style={{ marginRight: 4 }} /> Parameters</span>
               {content.parameters!.map((param) => (
                 <ParameterControl
                   key={param.name}
@@ -171,7 +173,7 @@ export function CodePlayground({ content, sectionId }: CodePlaygroundProps) {
                   <span className={styles.outputDot} />
                   <span className={styles.outputLabel}>Output</span>
                 </div>
-                <pre className={styles.outputPre}>{currentOutput}</pre>
+                <pre className={styles.outputPre}><FormattedText text={currentOutput} /></pre>
               </div>
             </div>
           )}

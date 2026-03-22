@@ -79,18 +79,22 @@
   font-size: var(--text-sm);
   font-weight: var(--font-weight-medium);
   transition: all var(--transition-fast);
-  border: 1px solid transparent;
+  background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+  border: 1px solid var(--color-border-subtle);
+  box-shadow: var(--shadow-sm);
 }
 
 .dashboardLink:hover {
   background: var(--color-surface);
   color: var(--color-text-primary);
+  border-color: var(--color-border);
 }
 
 .dashboardLinkActive {
-  background: var(--color-accent-bg);
+  background: linear-gradient(135deg, var(--color-accent-bg) 0%, rgba(50, 145, 255, 0.02) 100%);
   color: var(--color-accent);
   border-color: var(--color-accent-muted);
+  box-shadow: 0 4px 12px rgba(50, 145, 255, 0.1);
 }
 
 .dashboardIcon {
@@ -126,15 +130,15 @@
 .phaseHeader {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-2) var(--space-3);
+  gap: var(--space-3);
+  padding: var(--space-3);
   cursor: pointer;
   border-radius: var(--radius-md);
-  transition: background var(--transition-fast), color var(--transition-fast);
+  transition: all var(--transition-fast);
   user-select: none;
   margin-bottom: var(--space-2);
-  background: transparent;
-  border: none;
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-subtle);
   color: inherit;
   font-family: inherit;
   width: 100%;
@@ -143,33 +147,66 @@
 
 .phaseHeader:hover {
   background: var(--color-surface);
+  border-color: var(--color-border);
 }
 
-.phaseDot {
-  width: 8px;
-  height: 8px;
-  border-radius: var(--radius-full);
-  flex-shrink: 0;
-  box-shadow: 0 0 10px currentColor; /* Glow effect */
+.phaseHeaderActive {
+  background: var(--color-bg-elevated);
+  border-color: var(--color-border);
 }
 
-.phaseLabel {
+.phaseHeaderContent {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
 }
 
-.phaseTitle {
-  font-size: var(--text-xs);
+.phaseTopRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.phaseBadge {
+  font-size: 0.65rem;
   font-weight: var(--font-weight-bold);
-  color: var(--color-text-primary);
   text-transform: uppercase;
   letter-spacing: 0.1em;
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+}
+
+.phaseProgressText {
+  font-size: 0.7rem;
+  font-family: var(--font-mono);
+  color: var(--color-text-tertiary);
+  font-weight: var(--font-weight-medium);
 }
 
 .phaseSubtitle {
-  font-size: var(--text-xs);
-  color: var(--color-text-tertiary);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  line-height: var(--line-height-tight);
+}
+
+.progressBarWrapper {
+  width: 100%;
+  height: 4px;
+  background: var(--color-bg-tertiary);
+  border-radius: var(--radius-full);
+  overflow: hidden;
   margin-top: 2px;
 }
+
+.progressBarFill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width var(--transition-normal);
+}
+
+
 
 .phaseChevron {
   font-size: var(--text-xs);

@@ -3,12 +3,13 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { PHASES } from '../constants/lessons-meta';
 import { useProgress } from '../stores/progress-store';
 import type { LessonStatus } from '../stores/progress-store';
+import { Brain, LayoutDashboard, Circle, CircleDashed, CheckCircle2, ChevronRight, Menu, X, Check } from 'lucide-react';
 import styles from './Sidebar.module.css';
 
-const STATUS_ICONS: Record<LessonStatus, string> = {
-  'not-started': '○',
-  'in-progress': '◐',
-  'completed': '●',
+const STATUS_ICONS: Record<LessonStatus, React.ReactElement> = {
+  'not-started': <CircleDashed size={16} />,
+  'in-progress': <Circle size={16} />,
+  'completed': <CheckCircle2 size={16} />,
 };
 
 export function Sidebar() {
@@ -44,7 +45,7 @@ export function Sidebar() {
         onClick={() => setMobileOpen(!mobileOpen)}
         aria-label="Toggle menu"
       >
-        {mobileOpen ? '✕' : '☰'}
+        {mobileOpen ? <X size={24} /> : <Menu size={24} />}
       </button>
 
       {/* Mobile overlay */}
@@ -61,7 +62,7 @@ export function Sidebar() {
         {/* Logo */}
         <div className={styles.header}>
           <NavLink to="/" className={styles.logo} onClick={closeMobile}>
-            <div className={styles.logoIcon}>🧠</div>
+            <div className={styles.logoIcon}><Brain size={32} /></div>
             <div>
               <div className={styles.logoText}>ML Learning Hub</div>
               <div className={styles.logoSubtext}>Interactive • Visual • Practical</div>
@@ -77,7 +78,7 @@ export function Sidebar() {
           }`}
           onClick={closeMobile}
         >
-          <span className={styles.dashboardIcon}>📊</span>
+          <span className={styles.dashboardIcon}><LayoutDashboard size={20} /></span>
           <span>Tiến độ học tập</span>
         </NavLink>
 
@@ -91,26 +92,44 @@ export function Sidebar() {
           return (
             <div key={phase.id} className={styles.phaseGroup}>
               <button
-                className={styles.phaseHeader}
+                className={`${styles.phaseHeader} ${openPhases.has(phase.id) ? styles.phaseHeaderActive : ''}`}
                 onClick={() => togglePhase(phase.id)}
                 aria-expanded={openPhases.has(phase.id)}
               >
-                <span
-                  className={styles.phaseDot}
-                  style={{ backgroundColor: phase.color }}
-                />
-                <span className={styles.phaseLabel}>
-                  <span className={styles.phaseTitle}>{phase.title}</span>
-                  <span className={styles.phaseSubtitle}>
-                    {phase.subtitle} · {completedCount}/{phaseLessons.length}
-                  </span>
-                </span>
+                <div className={styles.phaseHeaderContent}>
+                  <div className={styles.phaseTopRow}>
+                    <span 
+                      className={styles.phaseBadge} 
+                      style={{ 
+                        color: phase.color, 
+                        backgroundColor: `color-mix(in srgb, ${phase.color} 15%, transparent)`,
+                        border: `1px solid color-mix(in srgb, ${phase.color} 30%, transparent)`
+                      }}
+                    >
+                      {phase.title}
+                    </span>
+                    <span className={styles.phaseProgressText}>
+                      {completedCount}/{phaseLessons.length}
+                    </span>
+                  </div>
+                  <div className={styles.phaseSubtitle}>{phase.subtitle}</div>
+                  <div className={styles.progressBarWrapper}>
+                    <div 
+                      className={styles.progressBarFill} 
+                      style={{ 
+                        width: `${(completedCount / phaseLessons.length) * 100}%`, 
+                        backgroundColor: phase.color,
+                        boxShadow: `0 0 10px color-mix(in srgb, ${phase.color} 50%, transparent)`
+                      }} 
+                    />
+                  </div>
+                </div>
                 <span
                   className={`${styles.phaseChevron} ${
                     openPhases.has(phase.id) ? styles.phaseChevronOpen : ''
                   }`}
                 >
-                  ▶
+                  <ChevronRight size={16} />
                 </span>
               </button>
 
@@ -135,7 +154,7 @@ export function Sidebar() {
                               isCompleted ? styles.lessonNumberCompleted : ''
                             }`}
                           >
-                            {isCompleted ? '✓' : String(lesson.number).padStart(2, '0')}
+                            {isCompleted ? <Check size={14} /> : String(lesson.number).padStart(2, '0')}
                           </span>
                           <span className={styles.lessonTitle}>{lesson.title}</span>
                           <span

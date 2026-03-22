@@ -1,9 +1,10 @@
 import { useState, useCallback } from 'react';
+import { Radio, Wand2, Wrench, Ruler, Trees, BarChart2, Target, Bell, Loader2, Play } from 'lucide-react';
 import styles from './PipelineVisualizer.module.css';
 
 interface PipelineStep {
   id: string;
-  icon: string;
+  icon: React.ReactElement;
   label: string;
   description: string;
   detail: string;
@@ -13,7 +14,7 @@ interface PipelineStep {
 const PIPELINE_STEPS: PipelineStep[] = [
   {
     id: 'collect',
-    icon: '📡',
+    icon: <Radio size={24} />,
     label: 'Thu thập',
     description: 'Zeek conn.log',
     detail: 'Zeek sensor phân tích packet → sinh conn.log với 20+ fields cho mỗi connection.',
@@ -21,7 +22,7 @@ const PIPELINE_STEPS: PipelineStep[] = [
   },
   {
     id: 'clean',
-    icon: '🧹',
+    icon: <Wand2 size={24} />,
     label: 'Làm sạch',
     description: 'Missing / Duplicates',
     detail: 'Loại bỏ records thiếu dữ liệu, xóa duplicates, xử lý giá trị ngoài phạm vi.',
@@ -29,7 +30,7 @@ const PIPELINE_STEPS: PipelineStep[] = [
   },
   {
     id: 'feature',
-    icon: '🔧',
+    icon: <Wrench size={24} />,
     label: 'Feature Eng.',
     description: '4–8 features',
     detail: 'Chọn và tạo features: duration, orig_bytes, resp_bytes, dest_port, bytes_ratio, unique_dests.',
@@ -37,7 +38,7 @@ const PIPELINE_STEPS: PipelineStep[] = [
   },
   {
     id: 'scale',
-    icon: '📏',
+    icon: <Ruler size={24} />,
     label: 'StandardScaler',
     description: 'Chuẩn hóa',
     detail: 'Đưa tất cả features về cùng thang đo (mean=0, std=1) để model không bị thiên vị bởi scale.',
@@ -45,7 +46,7 @@ const PIPELINE_STEPS: PipelineStep[] = [
   },
   {
     id: 'train',
-    icon: '🌲',
+    icon: <Trees size={24} />,
     label: 'Isolation Forest',
     description: 'n_estimators=100',
     detail: 'Xây 100 cây quyết định ngẫu nhiên. Mỗi cây cố gắng "cô lập" từng data point.',
@@ -53,7 +54,7 @@ const PIPELINE_STEPS: PipelineStep[] = [
   },
   {
     id: 'score',
-    icon: '📊',
+    icon: <BarChart2 size={24} />,
     label: 'Score',
     description: 'score_samples()',
     detail: 'Tính anomaly score cho mỗi connection. Score thấp (âm) = bất thường.',
@@ -61,7 +62,7 @@ const PIPELINE_STEPS: PipelineStep[] = [
   },
   {
     id: 'threshold',
-    icon: '🎯',
+    icon: <Target size={24} />,
     label: 'Threshold',
     description: 'FPR ≤ 10%',
     detail: 'So sánh score với ngưỡng. Tối ưu threshold để đạt FPR ≤ 10% và Recall ≥ 80%.',
@@ -69,7 +70,7 @@ const PIPELINE_STEPS: PipelineStep[] = [
   },
   {
     id: 'alert',
-    icon: '🚨',
+    icon: <Bell size={24} />,
     label: 'Alert',
     description: 'SOC Dashboard',
     detail: 'Gửi kết quả anomaly lên dashboard SOC để analyst xác minh và phản hồi.',
@@ -121,7 +122,7 @@ export function PipelineVisualizer({ highlightStep }: PipelineVisualizerProps) {
           disabled={isPlaying}
           type="button"
         >
-          {isPlaying ? '⏳ Running…' : '▶ Play Pipeline'}
+          {isPlaying ? <><Loader2 size={16} className={styles.spin} style={{ marginRight: 6 }} /> Running…</> : <><Play size={16} style={{ marginRight: 6 }} /> Play Pipeline</>}
         </button>
         <span className={styles.hint}>Click vào bước bất kỳ để xem chi tiết</span>
       </div>

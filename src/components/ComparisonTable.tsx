@@ -1,3 +1,4 @@
+import { FormattedText } from './FormattedText';
 import styles from './ComparisonTable.module.css';
 
 interface ComparisonTableProps {
@@ -14,7 +15,7 @@ export function ComparisonTable({ headers, rows, caption }: ComparisonTableProps
           <tr>
             {headers.map((header, idx) => (
               <th key={idx} className={styles.th}>
-                {header}
+                <FormattedText text={header} />
               </th>
             ))}
           </tr>
@@ -27,14 +28,14 @@ export function ComparisonTable({ headers, rows, caption }: ComparisonTableProps
                   key={cellIdx}
                   className={`${styles.td} ${cellIdx === 0 ? styles.rowLabel : ''}`}
                 >
-                  {cell}
+                  <FormattedText text={cell} />
                 </td>
               ))}
             </tr>
           ))}
         </tbody>
       </table>
-      {caption && <p className={styles.caption}>{caption}</p>}
+      {caption && <p className={styles.caption}><FormattedText text={caption} /></p>}
     </div>
   );
 }

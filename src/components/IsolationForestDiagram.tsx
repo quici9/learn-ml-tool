@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
+import { Circle, RotateCcw, Check, X } from 'lucide-react';
 import styles from './IsolationForestDiagram.module.css';
 
 /**
@@ -136,7 +137,7 @@ export function IsolationForestDiagram() {
           onClick={() => startAnimation('normal')}
           disabled={isAnimating}
         >
-          🟢 Normal Path (deep)
+          <Circle fill="currentColor" size={14} style={{ marginRight: 6 }} /> Normal Path (deep)
         </button>
         <button
           type="button"
@@ -144,14 +145,14 @@ export function IsolationForestDiagram() {
           onClick={() => startAnimation('anomaly')}
           disabled={isAnimating}
         >
-          🔴 Anomaly Path (short)
+          <Circle fill="currentColor" size={14} style={{ marginRight: 6 }} /> Anomaly Path (short)
         </button>
         <button
           type="button"
           className={`${styles.btn} ${styles.btnReset}`}
           onClick={reset}
         >
-          ↩ Reset
+          <RotateCcw size={14} style={{ marginRight: 4 }} /> Reset
         </button>
       </div>
 
@@ -209,7 +210,11 @@ function TreeNodeView({ node, currentPath, visiblePathIdx, pathIndex }: TreeNode
   return (
     <div className={styles.nodeGroup}>
       <div className={nodeClass}>
-        <span className={styles.nodeLabel}>{node.label}</span>
+        <span className={styles.nodeLabel}>
+          {node.label.replace(' ✓', '').replace(' ✗', '')}
+          {node.label.includes('✓') && <Check size={14} style={{ marginLeft: 4 }} />}
+          {node.label.includes('✗') && <X size={14} style={{ marginLeft: 4 }} />}
+        </span>
         {!node.isLeaf && (
           <span className={styles.nodeDepth}>depth {node.depth}</span>
         )}

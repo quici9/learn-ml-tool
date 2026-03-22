@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { FileText, RotateCcw, Target, Star, ThumbsUp, BookOpen } from 'lucide-react';
 import type { QuizQuestion } from '../types/lesson';
 import { QuizQuestionCard } from './QuizQuestionCard';
 import styles from './QuizSection.module.css';
@@ -51,7 +52,7 @@ export function QuizSection({ questions, lessonTitle, onScoreChange }: QuizSecti
       {/* Quiz header */}
       <div className={styles.quizHeader}>
         <div className={styles.headerLeft}>
-          <span className={styles.quizIcon}>📝</span>
+          <span className={styles.quizIcon}><FileText size={24} /></span>
           <div>
             <h2 className={styles.quizTitle}>Bài kiểm tra</h2>
             <p className={styles.quizSubtitle}>{lessonTitle}</p>
@@ -115,10 +116,11 @@ export function QuizSection({ questions, lessonTitle, onScoreChange }: QuizSecti
               {correctCount}/{totalCount} câu đúng
             </p>
             <p className={styles.scoreMessage}>
-              {getScoreMessage(scorePercent)}
+              <span style={{ marginRight: 8, verticalAlign: 'middle' }}>{getScoreMessage(scorePercent).icon}</span>
+              {getScoreMessage(scorePercent).text}
             </p>
             <button className={styles.resetBtn} onClick={handleResetAll} type="button">
-              ↻ Làm lại bài kiểm tra
+              <RotateCcw size={16} style={{ marginRight: 6 }} /> Làm lại bài kiểm tra
             </button>
           </div>
         </div>
@@ -127,9 +129,9 @@ export function QuizSection({ questions, lessonTitle, onScoreChange }: QuizSecti
   );
 }
 
-function getScoreMessage(percent: number): string {
-  if (percent === 100) return '🎯 Xuất sắc! Bạn nắm vững toàn bộ kiến thức!';
-  if (percent >= 80) return '🌟 Rất tốt! Bạn hiểu hầu hết các khái niệm.';
-  if (percent >= 60) return '👍 Khá tốt! Hãy ôn lại các phần chưa đúng.';
-  return '📖 Hãy đọc lại bài học và thử lại nhé!';
+function getScoreMessage(percent: number): { text: string; icon: React.ReactElement } {
+  if (percent === 100) return { text: 'Xuất sắc! Bạn nắm vững toàn bộ kiến thức!', icon: <Target size={18} /> };
+  if (percent >= 80) return { text: 'Rất tốt! Bạn hiểu hầu hết các khái niệm.', icon: <Star size={18} /> };
+  if (percent >= 60) return { text: 'Khá tốt! Hãy ôn lại các phần chưa đúng.', icon: <ThumbsUp size={18} /> };
+  return { text: 'Hãy đọc lại bài học và thử lại nhé!', icon: <BookOpen size={18} /> };
 }

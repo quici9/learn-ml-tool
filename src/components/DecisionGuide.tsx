@@ -1,4 +1,5 @@
 import type { DecisionContent } from '../types/lesson';
+import { FormattedText } from './FormattedText';
 import styles from './DecisionGuide.module.css';
 
 interface DecisionGuideProps {
@@ -41,17 +42,13 @@ export function DecisionGuide({ content }: DecisionGuideProps) {
                     ></span>
                   </td>
                   <td className={`${styles.td} ${styles.tdCondition}`}>
-                    {row.condition}
+                    <FormattedText text={row.condition} />
                   </td>
                   <td className={`${styles.td} ${styles.tdRecommendation}`}>
-                    {row.recommendation}
+                    <FormattedText text={row.recommendation} />
                   </td>
                   <td className={`${styles.td} ${styles.tdRationale}`}>
-                    <div dangerouslySetInnerHTML={{ 
-                      __html: row.rationale
-                        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                        .replace(/`([^`]+)`/g, '<code>$1</code>') 
-                    }} />
+                    <FormattedText text={row.rationale} />
                   </td>
                 </tr>
               );

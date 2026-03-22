@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import { Lightbulb, ChevronDown } from 'lucide-react';
 import type { InsightContent } from '../types/lesson';
+import { FormattedText } from './FormattedText';
 import styles from './InsightStep.module.css';
 
 interface InsightStepProps {
@@ -13,7 +15,7 @@ export function InsightStep({ content }: InsightStepProps) {
     <div className={`${styles.step} ${isRevealed ? styles.revealed : ''}`}>
       <div className={styles.content}>
         <div className={styles.header}>
-          <div className={styles.icon}>🤔</div>
+          <div className={styles.icon}><Lightbulb size={24} /></div>
           <div className={styles.main}>
             <h4 className={styles.question}>
               {content.question}
@@ -33,18 +35,12 @@ export function InsightStep({ content }: InsightStepProps) {
               className={styles.revealBtn}
             >
               <span>Xem câu trả lời</span>
-              <svg className={styles.revealIcon} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
+              <ChevronDown className={styles.revealIcon} size={20} />
             </button>
           </div>
         ) : (
           <div className={styles.answer}>
-            <div dangerouslySetInnerHTML={{ 
-              __html: content.answer
-                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                .replace(/`([^`]+)`/g, '<code>$1</code>') 
-            }} />
+            <FormattedText text={content.answer} />
           </div>
         )}
       </div>

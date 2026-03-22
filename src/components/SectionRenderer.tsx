@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import Prism from 'prismjs';
+import { Lightbulb, AlertTriangle, Info, Key, Pin, ChevronDown, ChevronUp, Blocks } from 'lucide-react';
 import 'prismjs/components/prism-python';
 import 'prismjs/themes/prism-tomorrow.css';
 import type {
@@ -26,6 +27,7 @@ import { FeatureImportanceChart } from './FeatureImportanceChart';
 import { HyperparamPlayground } from './HyperparamPlayground';
 import { ShapExplainer } from './ShapExplainer';
 import { ModelBenchmarkComparison } from './ModelBenchmarkComparison';
+import { FormattedText } from './FormattedText';
 import styles from './SectionRenderer.module.css';
 
 interface SectionRendererProps {
@@ -34,11 +36,11 @@ interface SectionRendererProps {
 
 type HighlightType = 'tip' | 'warning' | 'info' | 'important';
 
-const HIGHLIGHT_ICONS: Record<HighlightType, string> = {
-  tip: '💡',
-  warning: '⚠️',
-  info: 'ℹ️',
-  important: '🔑',
+const HIGHLIGHT_ICONS: Record<HighlightType, React.ReactElement> = {
+  tip: <Lightbulb size={20} />,
+  warning: <AlertTriangle size={20} />,
+  info: <Info size={20} />,
+  important: <Key size={20} />,
 };
 
 const HIGHLIGHT_CLASSES: Record<HighlightType, string> = {
@@ -101,8 +103,9 @@ function TextBlock({ content }: { content: TextContent }) {
         <p
           key={idx}
           className={styles.paragraph}
-          dangerouslySetInnerHTML={{ __html: formatMarkdownInline(para) }}
-        />
+        >
+          <FormattedText text={para} />
+        </p>
       ))}
       {content.highlights?.map((h, idx) => (
         <div
@@ -110,12 +113,13 @@ function TextBlock({ content }: { content: TextContent }) {
           className={`${styles.highlight} ${HIGHLIGHT_CLASSES[h.type] ?? ''}`}
         >
           <span className={styles.highlightIcon}>
-            {HIGHLIGHT_ICONS[h.type] ?? '📌'}
+            {HIGHLIGHT_ICONS[h.type] ?? <Pin size={20} />}
           </span>
           <p
             className={styles.highlightText}
-            dangerouslySetInnerHTML={{ __html: formatMarkdownInline(h.text) }}
-          />
+          >
+            <FormattedText text={h.text} />
+          </p>
         </div>
       ))}
     </div>
@@ -142,14 +146,14 @@ function CodeBlock({ content }: { content: CodeContent }) {
             <span className={styles.optionalBadge}>Nâng cao</span>
             <span className={styles.optionalTitle}>Mã nguồn chi tiết (Tùy chọn)</span>
           </div>
-          <button className={styles.optionalBtn}>Xem Code ↓</button>
+          <button className={styles.optionalBtn}>Xem Code <ChevronDown size={14} style={{ marginLeft: 4 }} /></button>
         </div>
       )}
       
       {content.isOptional && isExpanded && (
         <div className={styles.optionalBannerExpanded} onClick={() => setIsExpanded(false)}>
           <span className={styles.optionalTitle}>Mã nguồn chi tiết</span>
-          <button className={styles.optionalBtn}>Đóng Code ↑</button>
+          <button className={styles.optionalBtn}>Đóng Code <ChevronUp size={14} style={{ marginLeft: 4 }} /></button>
         </div>
       )}
 
@@ -238,7 +242,7 @@ function renderInteractive(content: InteractiveContent) {
     default:
       return (
         <div className={styles.interactivePlaceholder}>
-          <span className={styles.interactiveIcon}>🧩</span>
+          <span className={styles.interactiveIcon}><Blocks size={24} /></span>
           <p className={styles.interactiveLabel}>
             Interactive: {content.component}
           </p>
@@ -249,19 +253,5 @@ function renderInteractive(content: InteractiveContent) {
         </div>
       );
   }
-}
-
-/* ─── Helpers ─── */
-
-/**
- * Convert inline markdown (**bold**, *italic*, `code`) to HTML.
- * Sanitization is NOT needed here because all content is authored
- * internally — not user-generated.
- */
-function formatMarkdownInline(text: string): string {
-  return text
-    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\*(.+?)\*/g, '<em>$1</em>')
-    .replace(/`(.+?)`/g, '<code>$1</code>');
 }
 

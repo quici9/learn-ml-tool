@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
+import { BookOpen, Clock, Construction } from 'lucide-react';
 import { useParams } from 'react-router-dom';
 import { LESSON_BY_ID } from '../constants/lessons-meta';
 import { LESSON_CONTENT_BY_ID } from '../lessons';
@@ -82,7 +83,7 @@ export function LessonView() {
     return (
       <div className={styles.lessonView}>
         <div className={styles.placeholder}>
-          <span className={styles.placeholderIcon}>📚</span>
+          <span className={styles.placeholderIcon}><BookOpen size={48} /></span>
           <p className={styles.placeholderText}>Lesson not found</p>
         </div>
       </div>
@@ -117,7 +118,7 @@ export function LessonView() {
             {PHASE_LABELS[lessonMeta.phase] ?? lessonMeta.phase}
           </span>
           <span className={styles.timeBadge}>
-            ⏱ {lessonMeta.estimatedTime}
+            <Clock size={14} style={{ marginRight: 4 }} /> {lessonMeta.estimatedTime}
           </span>
         </div>
         <h1 className={styles.lessonTitle}>
@@ -152,7 +153,7 @@ export function LessonView() {
         </div>
       ) : (
         <div className={styles.placeholder}>
-          <span className={styles.placeholderIcon}>🚧</span>
+          <span className={styles.placeholderIcon}><Construction size={48} /></span>
           <h2 className={styles.placeholderTitle}>{lessonMeta.title}</h2>
           <p className={styles.placeholderText}>
             {lessonMeta.description}

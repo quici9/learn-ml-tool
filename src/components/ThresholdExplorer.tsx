@@ -1,4 +1,5 @@
 import { useState, useMemo, useCallback } from 'react';
+import { CheckCircle, AlertTriangle } from 'lucide-react';
 import {
   LineChart,
   Line,
@@ -275,7 +276,7 @@ interface InsightBoxProps {
 
 function InsightBox({ threshold, metrics }: InsightBoxProps) {
   const meetsTarget = metrics.fpr <= 0.1 && metrics.recall >= 0.8;
-  const icon = meetsTarget ? '✅' : '⚠️';
+  const icon = meetsTarget ? <CheckCircle size={20} /> : <AlertTriangle size={20} />;
   const statusClass = meetsTarget ? styles.insightGood : styles.insightWarn;
 
   let message: string;

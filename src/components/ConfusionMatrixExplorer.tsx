@@ -1,4 +1,5 @@
 import { useState, useCallback, useMemo } from 'react';
+import { RotateCcw, BarChart2, Info } from 'lucide-react';
 import styles from './ConfusionMatrixExplorer.module.css';
 
 interface ConfusionMatrixProps {
@@ -158,13 +159,13 @@ export function ConfusionMatrixExplorer({
           className={styles.resetBtn}
           onClick={handleReset}
         >
-          ↺ Reset
+          <RotateCcw size={14} style={{ marginRight: 4 }} /> Reset
         </button>
       </div>
 
       {/* ─── Metrics Panel ─── */}
       <div className={styles.metricsPanel}>
-        <span className={styles.metricsPanelTitle}>📊 Computed Metrics</span>
+        <span className={styles.metricsPanelTitle}><BarChart2 size={16} style={{ marginRight: 6 }} /> Computed Metrics</span>
         <div className={styles.metricsGrid}>
           {metrics.map((m) => (
             <div key={m.name} className={styles.metricCard}>
@@ -213,7 +214,7 @@ function MatrixCell({
         onClick={onToggleTooltip}
         aria-label={`Info about ${info.label}`}
       >
-        ℹ
+        <Info size={14} />
       </button>
       <span className={styles.cellLabel}>{info.shortLabel}</span>
       <input

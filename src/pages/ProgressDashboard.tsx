@@ -1,4 +1,5 @@
 import { PHASES, LESSONS } from '../constants/lessons-meta';
+import { BarChart2, Check, PieChart, Circle } from 'lucide-react';
 import { LESSON_CONTENT_BY_ID } from '../lessons';
 import { useProgress } from '../stores/progress-store';
 import styles from './ProgressDashboard.module.css';
@@ -39,7 +40,7 @@ export function ProgressDashboard() {
   return (
     <div className={styles.dashboard}>
       <header className={styles.header}>
-        <h1 className={styles.title}>📊 Tiến độ học tập</h1>
+        <h1 className={styles.title}><BarChart2 size={32} style={{ marginRight: 8, verticalAlign: 'middle' }} /> Tiến độ học tập</h1>
         <p className={styles.subtitle}>
           Theo dõi hành trình học ML của bạn
         </p>
@@ -78,17 +79,17 @@ export function ProgressDashboard() {
 
         {/* Stats cards */}
         <div className={styles.statCard}>
-          <div className={styles.statIcon} style={{ color: 'var(--color-success)' }}>✓</div>
+          <div className={styles.statIcon} style={{ color: 'var(--color-success)' }}><Check size={24} /></div>
           <div className={styles.statValue}>{completedLessons}</div>
           <div className={styles.statLabel}>Hoàn thành</div>
         </div>
         <div className={styles.statCard}>
-          <div className={styles.statIcon} style={{ color: 'var(--color-warning)' }}>◐</div>
+          <div className={styles.statIcon} style={{ color: 'var(--color-warning)' }}><PieChart size={24} /></div>
           <div className={styles.statValue}>{inProgressLessons}</div>
           <div className={styles.statLabel}>Đang học</div>
         </div>
         <div className={styles.statCard}>
-          <div className={styles.statIcon} style={{ color: 'var(--color-text-tertiary)' }}>○</div>
+          <div className={styles.statIcon} style={{ color: 'var(--color-text-tertiary)' }}><Circle size={24} /></div>
           <div className={styles.statValue}>
             {totalLessons - completedLessons - inProgressLessons}
           </div>

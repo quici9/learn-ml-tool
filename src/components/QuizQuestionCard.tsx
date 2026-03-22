@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { Lightbulb, Check, X, RotateCcw, FileText } from 'lucide-react';
 import type { QuizQuestion } from '../types/lesson';
 import styles from './QuizQuestionCard.module.css';
 
@@ -131,7 +132,7 @@ export function QuizQuestionCard({ question, index, onAnswer }: QuizQuestionCard
             onClick={() => setShowHint(!showHint)}
             type="button"
           >
-            💡 {showHint ? 'Ẩn gợi ý' : 'Xem gợi ý'}
+            <Lightbulb size={16} style={{ marginRight: 6 }} /> {showHint ? 'Ẩn gợi ý' : 'Xem gợi ý'}
           </button>
           {showHint && <p className={styles.hintText}>{question.hint}</p>}
         </div>
@@ -151,11 +152,11 @@ export function QuizQuestionCard({ question, index, onAnswer }: QuizQuestionCard
         ) : (
           <div className={styles.resultActions}>
             <div className={`${styles.resultBadge} ${isCorrect ? styles.correctBadge : styles.wrongBadge}`}>
-              {isCorrect ? '✓ Chính xác!' : '✗ Chưa đúng'}
+              {isCorrect ? <><Check size={16} style={{ marginRight: 4 }} /> Chính xác!</> : <><X size={16} style={{ marginRight: 4 }} /> Chưa đúng</>}
             </div>
             {!isCorrect && (
               <button className={styles.retryBtn} onClick={handleRetry} type="button">
-                ↻ Thử lại
+                <RotateCcw size={14} style={{ marginRight: 6 }} /> Thử lại
               </button>
             )}
           </div>
@@ -165,7 +166,7 @@ export function QuizQuestionCard({ question, index, onAnswer }: QuizQuestionCard
       {/* Explanation */}
       {isSubmitted && (
         <div className={`${styles.explanation} ${isCorrect ? styles.explanationCorrect : styles.explanationWrong}`}>
-          <span className={styles.explanationIcon}>📝</span>
+          <span className={styles.explanationIcon}><FileText size={20} /></span>
           <p className={styles.explanationText}>{question.explanation}</p>
         </div>
       )}
