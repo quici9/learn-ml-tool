@@ -141,4 +141,21 @@
   .lessonTitle {
     font-size: var(--text-4xl);
   }
+  .lessonHeader {
+    margin-top: var(--space-6);
+    margin-bottom: var(--space-8);
+  }
+  .lessonDescription {
+    font-size: var(--text-base);
+  }
+}
+
+@media (max-width: 480px) {
+  .lessonTitle {
+    font-size: var(--text-2xl);
+  }
+  .lessonMeta {
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
 }

@@ -59,3 +59,15 @@
   text-align: center;
   font-style: italic;
 }
+
+@media (max-width: 768px) {
+  .th,
+  .td {
+    padding: var(--space-2) var(--space-3);
+    font-size: 0.75rem;
+  }
+
+  .rowLabel {
+    white-space: normal;
+  }
+}

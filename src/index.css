@@ -45,6 +45,10 @@
   --color-phase-2-glow: rgba(121, 40, 202, 0.3);
   --color-phase-3: #FF0080; /* Pink/Magenta */
   --color-phase-3-glow: rgba(255, 0, 128, 0.3);
+  --color-phase-4: #17C964; /* Emerald Green */
+  --color-phase-4-glow: rgba(23, 201, 100, 0.3);
+  --color-phase-5: #F5A623; /* Amber */
+  --color-phase-5-glow: rgba(245, 166, 35, 0.3);
 
   /* Typography */
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -254,5 +258,15 @@ code {
 @media (max-width: 768px) {
   .app-main {
     margin-left: 0;
+  }
+
+  .app-main-content {
+    padding: var(--space-5) var(--space-4);
+  }
+}
+
+@media (max-width: 480px) {
+  .app-main-content {
+    padding: var(--space-4) var(--space-3);
   }
 }
