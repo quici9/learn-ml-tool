@@ -1,0 +1,84 @@
+.card {
+  margin: 1.5rem 0;
+  border-radius: var(--border-radius-lg);
+  border: 1px solid #e0e7ff;
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  padding: 1.25rem 1.25rem 1.25rem 3.5rem;
+  overflow: hidden;
+}
+
+.leftEdge {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2.5rem;
+  background-color: #eef2ff;
+  border-right: 1px solid #e0e7ff;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 1.25rem;
+}
+
+.icon {
+  font-size: 1.25rem;
+}
+
+.header {
+  margin-bottom: 0.75rem;
+}
+
+.label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #6366f1;
+  margin-bottom: 0.25rem;
+  display: block;
+}
+
+.situation {
+  color: var(--color-text);
+  font-weight: 600;
+  font-size: 1.125rem;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.problemBox {
+  background-color: #fef2f2;
+  border-left: 2px solid #fca5a5;
+  padding: 0.5rem 0.75rem;
+  margin: 0.75rem 0;
+  color: var(--color-text-light);
+  font-size: 0.875rem;
+}
+
+.problemLabel {
+  color: #b91c1c;
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 0.125rem;
+}
+
+.questionBox {
+  color: #312e81;
+  font-weight: 500;
+  font-size: 0.875rem;
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.qIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #818cf8;
+}

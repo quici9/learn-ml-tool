@@ -22,6 +22,7 @@ export function CodePlayground({ content, sectionId }: CodePlaygroundProps) {
     buildDefaultParams(content.parameters),
   );
   const codeRef = useRef<HTMLElement>(null);
+  const [isExpanded, setIsExpanded] = useState(!content.isOptional);
 
   // Highlight code on mount and when code changes
   useEffect(() => {
@@ -78,82 +79,103 @@ export function CodePlayground({ content, sectionId }: CodePlaygroundProps) {
 
   return (
     <div className={styles.playground}>
-      {/* ─── Header ─── */}
-      <div className={styles.header}>
-        <div className={styles.headerLeft}>
-          {content.filename && (
-            <span className={styles.filename}>{content.filename}</span>
-          )}
-          <span className={styles.langBadge}>{content.language}</span>
-          <span className={styles.playgroundBadge}>▶ Playground</span>
-        </div>
-        <div className={styles.headerActions}>
-          <button
-            type="button"
-            className={`${styles.copyBtn} ${copied ? styles.copyBtnSuccess : ''}`}
-            onClick={handleCopy}
-          >
-            {copied ? '✓ Copied' : '📋 Copy'}
-          </button>
-          <button
-            type="button"
-            className={styles.runBtn}
-            onClick={handleRun}
-            disabled={isRunning}
-          >
-            {isRunning ? (
-              <>
-                <span className={styles.runningSpinner} />
-                Running...
-              </>
-            ) : (
-              '▶ Run'
-            )}
-          </button>
-        </div>
-      </div>
-
-      {/* ─── Description ─── */}
-      {content.description && (
-        <p className={styles.description}>{content.description}</p>
-      )}
-
-      {/* ─── Code ─── */}
-      <pre className={styles.codeArea}>
-        <code
-          ref={codeRef}
-          className={`language-${content.language}`}
-        >
-          {content.code}
-        </code>
-      </pre>
-
-      {/* ─── Parameter Controls ─── */}
-      {hasParams && (
-        <div className={styles.paramsPanel}>
-          <span className={styles.paramsPanelTitle}>⚙ Parameters</span>
-          {content.parameters!.map((param) => (
-            <ParameterControl
-              key={param.name}
-              param={param}
-              value={paramValues[param.name] ?? param.defaultValue}
-              onChange={handleParamChange}
-            />
-          ))}
-        </div>
-      )}
-
-      {/* ─── Output ─── */}
-      {showOutput && (
-        <div className={styles.outputPanel}>
-          <div className={styles.outputPanelInner}>
-            <div className={styles.outputHeader}>
-              <span className={styles.outputDot} />
-              <span className={styles.outputLabel}>Output</span>
-            </div>
-            <pre className={styles.outputPre}>{currentOutput}</pre>
+      {content.isOptional && !isExpanded && (
+        <div className={styles.optionalBanner} onClick={() => setIsExpanded(true)}>
+          <div className={styles.optionalInfo}>
+            <span className={styles.optionalBadge}>Nâng cao</span>
+            <span className={styles.optionalTitle}>Playground (Tùy chọn)</span>
           </div>
+          <button className={styles.optionalBtn}>Xem Code ↓</button>
         </div>
+      )}
+      
+      {content.isOptional && isExpanded && (
+        <div className={styles.optionalBannerExpanded} onClick={() => setIsExpanded(false)}>
+          <span className={styles.optionalTitle}>Playground</span>
+          <button className={styles.optionalBtn}>Đóng Code ↑</button>
+        </div>
+      )}
+
+      {(!content.isOptional || isExpanded) && (
+        <>
+          {/* ─── Header ─── */}
+          <div className={styles.header}>
+            <div className={styles.headerLeft}>
+              {content.filename && (
+                <span className={styles.filename}>{content.filename}</span>
+              )}
+              <span className={styles.langBadge}>{content.language}</span>
+              <span className={styles.playgroundBadge}>▶ Playground</span>
+            </div>
+            <div className={styles.headerActions}>
+              <button
+                type="button"
+                className={`${styles.copyBtn} ${copied ? styles.copyBtnSuccess : ''}`}
+                onClick={handleCopy}
+              >
+                {copied ? '✓ Copied' : '📋 Copy'}
+              </button>
+              <button
+                type="button"
+                className={styles.runBtn}
+                onClick={handleRun}
+                disabled={isRunning}
+              >
+                {isRunning ? (
+                  <>
+                    <span className={styles.runningSpinner} />
+                    Running...
+                  </>
+                ) : (
+                  '▶ Run'
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* ─── Description ─── */}
+          {content.description && (
+            <p className={styles.description}>{content.description}</p>
+          )}
+
+          {/* ─── Code ─── */}
+          <pre className={styles.codeArea}>
+            <code
+              ref={codeRef}
+              className={`language-${content.language}`}
+            >
+              {content.code}
+            </code>
+          </pre>
+
+          {/* ─── Parameter Controls ─── */}
+          {hasParams && (
+            <div className={styles.paramsPanel}>
+              <span className={styles.paramsPanelTitle}>⚙ Parameters</span>
+              {content.parameters!.map((param) => (
+                <ParameterControl
+                  key={param.name}
+                  param={param}
+                  value={paramValues[param.name] ?? param.defaultValue}
+                  onChange={handleParamChange}
+                />
+              ))}
+            </div>
+          )}
+
+          {/* ─── Output ─── */}
+          {showOutput && (
+            <div className={styles.outputPanel}>
+              <div className={styles.outputPanelInner}>
+                <div className={styles.outputHeader}>
+                  <span className={styles.outputDot} />
+                  <span className={styles.outputLabel}>Output</span>
+                </div>
+                <pre className={styles.outputPre}>{currentOutput}</pre>
+              </div>
+            </div>
+          )}
+        </>
       )}
     </div>
   );

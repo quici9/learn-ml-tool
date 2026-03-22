@@ -1,0 +1,134 @@
+.guide {
+  margin: 2rem 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.header {
+  background-color: var(--color-background);
+  border-bottom: 1px solid var(--color-border);
+  padding: 0.75rem 1.25rem;
+}
+
+.title {
+  color: var(--color-text);
+  font-weight: 600;
+  font-size: 1rem;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: var(--color-text-light);
+}
+
+.tableContainer {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+  min-width: 600px;
+}
+
+.th {
+  padding: 0.75rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-light);
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-background);
+}
+
+.thSignal {
+  width: 5%;
+  text-align: center;
+}
+
+.thCondition {
+  width: 25%;
+}
+
+.thRecommendation {
+  width: 25%;
+}
+
+.thRationale {
+  width: 45%;
+}
+
+.tr {
+  transition: background-color 0.2s;
+}
+
+.tr:hover {
+  background-color: var(--color-surface);
+}
+
+.td {
+  padding: 1rem 1.25rem;
+  font-size: 0.875rem;
+  border-bottom: 1px solid var(--color-background);
+}
+
+.tr:last-child .td {
+  border-bottom: none;
+}
+
+.tdSignal {
+  text-align: center;
+}
+
+.tdCondition {
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.tdRecommendation {
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+.tdRationale {
+  color: var(--color-text-light);
+}
+
+.tdRationale strong {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.tdRationale code {
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: calc(var(--border-radius) / 2);
+  padding: 0.125rem 0.25rem;
+  font-family: monospace;
+}
+
+.dot {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid #fff;
+}
+
+/* Colors based on signals */
+.bgGreen { background-color: #f0fdf4; }
+.dotGreen { background-color: var(--color-success); }
+
+.bgYellow { background-color: #fffbeb; }
+.dotYellow { background-color: #f59e0b; }
+
+.bgRed { background-color: #fef2f2; }
+.dotRed { background-color: var(--color-danger); }

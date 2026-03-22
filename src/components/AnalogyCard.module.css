@@ -1,0 +1,107 @@
+.card {
+  border: 1px solid var(--color-border);
+  background-color: #f0f7ff;
+  border-radius: var(--border-radius-lg);
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.leftBorder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background-color: var(--color-primary);
+}
+
+.content {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.icon {
+  font-size: 1.8rem;
+  background-color: var(--color-surface);
+  padding: 0.75rem;
+  border-radius: 50%;
+  box-shadow: var(--shadow-sm);
+  flex-shrink: 0;
+}
+
+.body {
+  flex: 1;
+}
+
+.title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-top: 0;
+  margin-bottom: 0.25rem;
+}
+
+.realWorld {
+  color: var(--color-text-light);
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+.tableContainer {
+  background-color: var(--color-surface);
+  border-radius: var(--border-radius);
+  border: 1px solid #dbeafe;
+  overflow: hidden;
+}
+
+.tableHeader {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background-color: #eff6ff;
+  border-bottom: 1px solid #dbeafe;
+  padding: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1e3a8a;
+}
+
+.tableRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--color-text);
+  border-bottom: 1px solid #f0fdf4;
+}
+
+.tableRow:last-child {
+  border-bottom: none;
+}
+
+.abstract, .concrete {
+  padding: 0 0.5rem;
+}
+
+.concrete {
+  border-left: 1px solid #dbeafe;
+}
+
+.bullet {
+  display: inline-block;
+  width: 10px;
+  color: #60a5fa;
+  margin-right: 0.5rem;
+}
+
+.arrow {
+  display: inline-block;
+  width: 12px;
+  color: var(--color-success);
+  margin-right: 0.5rem;
+  font-size: 1.1rem;
+  line-height: 1;
+}

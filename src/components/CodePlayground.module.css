@@ -10,6 +10,65 @@
 
 /* ─── Header ─── */
 
+.optionalBanner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  background-color: #0a0a0a;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  border-bottom: 1px solid transparent;
+}
+
+.optionalBanner:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.optionalBannerExpanded {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.25rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.optionalInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.optionalBadge {
+  background-color: var(--color-accent);
+  color: var(--color-background);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.125rem 0.5rem;
+  border-radius: 9999px;
+  text-transform: uppercase;
+}
+
+.optionalTitle {
+  color: #e4e4e7;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.optionalBtn {
+  background: none;
+  border: none;
+  color: var(--color-text-tertiary);
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.optionalBanner:hover .optionalBtn {
+  color: var(--color-text-secondary);
+}
+
 .header {
   display: flex;
   justify-content: space-between;

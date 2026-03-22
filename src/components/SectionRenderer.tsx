@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Prism from 'prismjs';
 import 'prismjs/components/prism-python';
 import 'prismjs/themes/prism-tomorrow.css';
@@ -7,7 +7,15 @@ import type {
   TextContent,
   CodeContent,
   InteractiveContent,
+  AnalogyContent,
+  InsightContent,
+  ScenarioContent,
+  DecisionContent,
 } from '../types/lesson';
+import { AnalogyCard } from './AnalogyCard';
+import { InsightStep } from './InsightStep';
+import { DecisionGuide } from './DecisionGuide';
+import { ScenarioCard } from './ScenarioCard';
 import { ComparisonTable } from './ComparisonTable';
 import { CodePlayground } from './CodePlayground';
 import { ConfusionMatrixExplorer } from './ConfusionMatrixExplorer';
@@ -15,6 +23,9 @@ import { ThresholdExplorer } from './ThresholdExplorer';
 import { PipelineVisualizer } from './PipelineVisualizer';
 import { IsolationForestDiagram } from './IsolationForestDiagram';
 import { FeatureImportanceChart } from './FeatureImportanceChart';
+import { HyperparamPlayground } from './HyperparamPlayground';
+import { ShapExplainer } from './ShapExplainer';
+import { ModelBenchmarkComparison } from './ModelBenchmarkComparison';
 import styles from './SectionRenderer.module.css';
 
 interface SectionRendererProps {
@@ -68,6 +79,14 @@ function renderContent(section: LessonSection) {
       );
     case 'interactive':
       return renderInteractive(content);
+    case 'analogy':
+      return <AnalogyCard content={content as AnalogyContent} />;
+    case 'insight':
+      return <InsightStep content={content as InsightContent} />;
+    case 'scenario':
+      return <ScenarioCard content={content as ScenarioContent} />;
+    case 'decision':
+      return <DecisionGuide content={content as DecisionContent} />;
     default:
       return null;
   }
@@ -107,33 +126,55 @@ function TextBlock({ content }: { content: TextContent }) {
 
 function CodeBlock({ content }: { content: CodeContent }) {
   const codeRef = useRef<HTMLElement>(null);
+  const [isExpanded, setIsExpanded] = useState(!content.isOptional);
 
   useEffect(() => {
-    if (codeRef.current) {
+    if (codeRef.current && isExpanded) {
       Prism.highlightElement(codeRef.current);
     }
-  }, [content.code]);
+  }, [content.code, isExpanded]);
 
   return (
     <div className={styles.codeBlock}>
-      {content.filename && (
-        <div className={styles.codeHeader}>
-          <span className={styles.codeFilename}>{content.filename}</span>
-          <span className={styles.codeLang}>{content.language}</span>
+      {content.isOptional && !isExpanded && (
+        <div className={styles.optionalBanner} onClick={() => setIsExpanded(true)}>
+          <div className={styles.optionalInfo}>
+            <span className={styles.optionalBadge}>Nâng cao</span>
+            <span className={styles.optionalTitle}>Mã nguồn chi tiết (Tùy chọn)</span>
+          </div>
+          <button className={styles.optionalBtn}>Xem Code ↓</button>
         </div>
       )}
-      {content.description && (
-        <p className={styles.codeDescription}>{content.description}</p>
+      
+      {content.isOptional && isExpanded && (
+        <div className={styles.optionalBannerExpanded} onClick={() => setIsExpanded(false)}>
+          <span className={styles.optionalTitle}>Mã nguồn chi tiết</span>
+          <button className={styles.optionalBtn}>Đóng Code ↑</button>
+        </div>
       )}
-      <pre className={styles.pre}>
-        <code ref={codeRef} className={`language-${content.language}`}>
-          {content.code}
-        </code>
-      </pre>
-      {content.output && (
-        <div className={styles.codeOutput}>
-          <span className={styles.outputLabel}>Output:</span>
-          <pre className={styles.outputPre}>{content.output}</pre>
+
+      {(!content.isOptional || isExpanded) && (
+        <div className={styles.codeContentWrapper}>
+          {content.filename && (
+            <div className={styles.codeHeader}>
+              <span className={styles.codeFilename}>{content.filename}</span>
+              <span className={styles.codeLang}>{content.language}</span>
+            </div>
+          )}
+          {content.description && (
+            <p className={styles.codeDescription}>{content.description}</p>
+          )}
+          <pre className={styles.pre}>
+            <code ref={codeRef} className={`language-${content.language}`}>
+              {content.code}
+            </code>
+          </pre>
+          {content.output && (
+            <div className={styles.codeOutput}>
+              <span className={styles.outputLabel}>Output:</span>
+              <pre className={styles.outputPre}>{content.output}</pre>
+            </div>
+          )}
         </div>
       )}
     </div>
@@ -188,6 +229,12 @@ function renderInteractive(content: InteractiveContent) {
       } | undefined;
       return <FeatureImportanceChart features={featureProps?.features} />;
     }
+    case 'HyperparamPlayground':
+      return <HyperparamPlayground />;
+    case 'ModelBenchmarkComparison':
+      return <ModelBenchmarkComparison />;
+    case 'ShapExplainer':
+      return <ShapExplainer />;
     default:
       return (
         <div className={styles.interactivePlaceholder}>
