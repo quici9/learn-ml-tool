@@ -10,7 +10,7 @@ export interface LessonMeta {
   prerequisites: string[];
 }
 
-export type Phase = 'phase-1' | 'phase-2' | 'phase-3';
+export type Phase = 'phase-1' | 'phase-2' | 'phase-3' | 'phase-4' | 'phase-5';
 
 export interface PhaseInfo {
   id: Phase;
